@@ -1,4 +1,4 @@
-import { useMemo, useReducer } from "react";
+import { createContext, useMemo, useReducer } from "react";
 
 export type CartItemType = {
   sku: string;
@@ -130,3 +130,18 @@ const useCartContext = (initCartState: CartStateType) => {
 
   return { dispatch, REDUCER_ACTIONS, totalItems, totalPrice, cart };
 };
+
+export type UseCartcontextType = ReturnType<typeof useCartContext>;
+
+const initCartContextState: UseCartcontextType = {
+  dispatch: () => {},
+  REDUCER_ACTIONS: REDUCER_ACTION_TYPE,
+  totalItems: 0,
+  totalPrice: "",
+  cart: [],
+};
+
+export const CartContext =
+  createContext<UseCartcontextType>(initCartContextState);
+
+//https://medium.com/@seb_5882/a-short-guide-to-reacts-powerful-duo-usereducer-and-usecontext-23cea6f9ab35
