@@ -1,4 +1,4 @@
-import { createContext, useMemo, useReducer } from "react";
+import { ReactElement, createContext, useMemo, useReducer } from "react";
 
 export type CartItemType = {
   sku: string;
@@ -143,5 +143,17 @@ const initCartContextState: UseCartcontextType = {
 
 export const CartContext =
   createContext<UseCartcontextType>(initCartContextState);
+
+type ChildrenType = { children?: ReactElement | ReactElement[] };
+
+export const CartProvider = ({ children }: ChildrenType): ReactElement => {
+  return (
+    <CartContext.Provider value={useCartContext(initCartState)}>
+      {children}
+    </CartContext.Provider>
+  );
+};
+
+export default CartContext;
 
 //https://medium.com/@seb_5882/a-short-guide-to-reacts-powerful-duo-usereducer-and-usecontext-23cea6f9ab35
