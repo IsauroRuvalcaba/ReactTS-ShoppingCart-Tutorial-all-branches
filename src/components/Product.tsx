@@ -14,14 +14,34 @@ const Product = ({
   dispatch,
   REDUCER_ACTIONS,
   inCart,
-}: ProductType): ReactElement => {
+}: PropsType): ReactElement => {
   // const img: string = require('../images/${product.sku}.jpg') //this dosent work with vite
 
   const img: string = new URL(`../images/${product.sku}.jpg`, import.meta.url)
     .href;
   console.log(img);
 
-  return <div>Product</div>;
+  const onAddToCart = () =>
+    dispatch({ type: REDUCER_ACTIONS.ADD, payload: { ...product, qty: 1 } });
+
+  const itemInCart = inCart ? " → Item in Cart: ✔️" : null;
+
+  const content = (
+    <article className="product">
+      <h3>{product.name}</h3>
+      <img src={img} alt={product.name} className="product__img" />
+      <p>
+        {new Intl.NumberFormat("en-us", {
+          style: "currency",
+          currency: "USD",
+        }).format(product.price)}{" "}
+        {itemInCart}
+      </p>
+      <button onClick={onAddToCart}>Add to Cart</button>
+    </article>
+  );
+
+  return content;
 };
 
 export default Product;
